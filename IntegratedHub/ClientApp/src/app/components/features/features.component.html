@@ -29,10 +29,10 @@
         <tbody>
           <tr *ngFor="let feature of featuresList | featuresFilter: featureSearchText ; let featureIndex = index">
             <td>{{featureIndex + 1}}</td>
-            <td>{{feature.name}}</td>
-            <td>{{feature.description}}</td>
-            <td>{{feature.createdDate}}</td>
-            <td>{{feature.updatedDate}}</td>
+            <td>{{feature.Name}}</td>
+            <td>{{feature.Description}}</td>
+            <td>{{feature.CreatedDate}}</td>
+            <td>{{feature.UpdatedDate}}</td>
             <td>
               <label class="feature-state-toggle-label">
                 <input type="checkbox" [checked]="feature.State" (change)="feature.State = !feature.State">

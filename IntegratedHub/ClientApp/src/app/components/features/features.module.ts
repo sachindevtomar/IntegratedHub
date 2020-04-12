@@ -7,6 +7,7 @@ import { FeaturesRoutes } from './features.route';
 import { AddFeatureModalComponent } from '../add-feature-modal/add-feature-modal.component';
 import { FeaturesFilterPipe } from '../../pipes/featuresfilter.pipe';
 import { FormsModule } from '@angular/forms';
+import { FeatureService } from '../../services/FeatureService';
 
 @NgModule({
     declarations: [FeaturesComponent,
@@ -17,6 +18,9 @@ import { FormsModule } from '@angular/forms';
         FormsModule,
         RouterModule.forChild(FeaturesRoutes),
         CommonModule
-    ]
+  ],
+  providers: [
+    FeatureService
+  ]
 })
 export class FeaturesModule { }

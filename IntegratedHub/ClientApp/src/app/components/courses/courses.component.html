@@ -1,0 +1,130 @@
+<div class="container">
+  <main id="courses-main-content-container">
+    <h1>Courses Catalog</h1>
+    <p>The skills required to advance your career and earn your spot at the top do not come easily. Gain today's cloud
+      techincal skills with latest courses.
+    </p>
+    <div id="courses-search-box">
+      <input type="text" placeholder="Search for a course" [(ngModel)]="courseSearchText" aria-label="Search"
+        id="courses-search-inputbox">
+      <button role="search" class="glyphicon glyphicon-search" title="search button" id="courses-search-btn"
+        aria-hidden="true" tabindex="-1">
+        <span class="x-screen-reader"></span>
+      </button>
+    </div>
+
+    <div class="course-main-section">
+
+      <!-- Filter section -->
+      <div class="col-sm-4 col-md-3">
+        <div>
+          <div class="row courses-filter-container">
+            <h2>Filters</h2>
+            <div class="courses-menu-list">
+              <ul class="courses-mainmenu-list">
+                <li>
+                  <button class="dropdown-toggle courses-btn" data-toggle="collapse"
+                    data-target="#courses-filter-technology" aria-expanded="true"
+                    aria-controls="courses-filter-technology" (click)="showMoreLessbutton()">
+                    Technology
+                  </button>
+                  <ul class="collapse  multi-collapse" id="courses-filter-technology">
+                    <li *ngFor="let technology of technologyTags" class="courses-technology-tags">
+                      <label class="courses-filter-technology-tags-p" for="{{technology}}">{{technology}}
+                        <input type="checkbox" class="courses-filter-technology-checkbox" id="{{technology}}"
+                          (change)="filterCoursesUsingTags(technology)" />
+                        <span class="courses-filter-technology-checkbox-span"></span>
+                      </label>
+                    </li>
+                  </ul>
+                  <div class="courses-viewmore-btn" (click)="showMoreTechnologies()"
+                    *ngIf="courseFilterShowMore && courseShowMoreLessButton"><b>View more</b></div>
+                  <div class="courses-viewmore-btn" (click)="showLessTechnologies()"
+                    *ngIf="!courseFilterShowMore && courseShowMoreLessButton"><b>View less</b></div>
+                </li>
+                <li>
+                  <button class="dropdown-toggle courses-btn" data-toggle="collapse"
+                    data-target="#courses-filter-duration" aria-expanded="true" aria-controls="courses-filter-duration">
+                    Duration
+                  </button>
+                  <ul class="collapse  multi-collapse" id="courses-filter-duration">
+                    <li class="slidecontainer">
+                      <mat-slider [disabled]=false [invert]=false [thumbLabel]=true
+                        [(ngModel)]="currentDurationSliderValue" [vertical]=false min="1" max="{{maxDuration}}"
+                        (change)="filterCoursesUsingDuration()"></mat-slider>
+                    </li>
+                    <li>
+                      <div>
+                        <p id="course-filter-duration-min-value">0</p>
+                        <p id="course-filter-duration-max-value">{{maxDuration}}</p>
+                      </div>
+                    </li>
+                    <li id="course-filter-duration-status-text">
+                      <br>
+                      <p><b>Filter is applied for 0 to {{currentDurationSliderValue}} months</b></p>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course display section with pagination -->
+      <div class="col-sm-8 col-md-9">
+        <section role="region">
+          <div class="row courses-information-container">
+            <h2>Courses</h2>
+
+            <!-- Course data will be shown if there is item available after applying filter -->
+            <div class="courses-cards-div" *ngIf="finalFilteredCourses.length != 0">
+              <div class="courses-card card">
+                <div class="courses-card-body card-body row">
+                  <div class="course-card-each-item col-xs-12 col-sm-12 col-md-12"
+                    *ngFor="let course of pagedItems| coursesFilter: courseSearchText">
+                    <div class="row">
+                      <a class="courses-card-title card-title col-md-9"
+                        *ngIf="helperMethods.userHasClaim('CanViewCourseDetailsPage')"
+                        [routerLink]="['/coursedetails', course.id]">
+                        <h3>{{course.courseName}}</h3>
+                      </a>
+                      <h3 class="courses-card-title card-title col-md-9"
+                        *ngIf="!helperMethods.userHasClaim('CanViewCourseDetailsPage')">{{course.courseName}}</h3>
+                      <div class="col-md-3">
+                        <p class="course-information-duration-p">Duration: {{course.duration}} months</p>
+                      </div>
+                    </div>
+                    <p class="courses-card-text card-text">
+                      {{course.courseDescription}}
+                    </p>
+                    <!-- Tags for each course -->
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="col-xs-3 col-sm-3 col-md-1 course-information-courseTag-div"
+                        *ngFor="let courseTag of course.tags">
+                        <p class="course-information-courseTag-p">{{courseTag}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <jw-pagination [items]="finalFilteredCourses" (changePage)="beginPagination($event)" pageSize="5">
+                  </jw-pagination>
+                </div>
+              </div>
+            </div>
+
+            <!-- No course data available message will be shown for zero filtered result -->
+            <div class="course-information-empy-result-message" *ngIf="finalFilteredCourses.length == 0">
+              <p>
+                <b>No course data available. Please update your filter.</b>
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>

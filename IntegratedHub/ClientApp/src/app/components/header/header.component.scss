@@ -1,0 +1,64 @@
+$background-light: #000000;
+$background-darkRed: #b92026;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+@mixin zero-margin($pad-up-down, $pad-left-right) {
+  margin: 0px auto;
+  padding: $pad-up-down $pad-left-right;
+}
+
+.home-navbar {
+  background: $background-darkRed;
+  color: white;
+  .maq-company-logo {
+    margin-top: 10px;
+  }
+  .nav-brand-separator {
+    border-right: 2px solid white;
+    height: 40px;
+    padding-right: 15px;
+    margin-top: 3px;
+    margin-right: 10px;
+  }
+  .icon-bar {
+    background-color: white;
+  }
+  #myNavbar {
+    a {
+      color: white;
+    }
+    a:hover {
+      color: $background-light;
+      background-color: #dddddc;
+    }
+    a:active {
+      color: $background-light;
+    }
+    a:focus {
+      outline: none;
+      color: $background-light;
+    }
+    .header-user-img {
+      height: 20px;
+      width: 25px;
+    }
+    .dropdown-option {
+      color: black;
+    }
+  }
+
+  @media (max-width: #{$screen-md-min}) {
+    .nav-brand-separator {
+      border: none;
+      margin-right: 0px;
+      margin-left: 10px;
+    }
+    #myNavbar {
+      .dropdown-option {
+        color: white;
+      }
+    }
+  }
+}

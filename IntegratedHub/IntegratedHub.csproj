@@ -24,11 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\user-history.ts" />
     <None Remove="ClientApp\src\app\services\FeatureService.ts" />
+    <None Remove="ClientApp\src\app\Shared\user-history.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\user-history.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\FeatureService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Shared\user-history.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

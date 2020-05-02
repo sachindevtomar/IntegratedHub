@@ -229,3 +229,8 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+#hide unwanted js files
+
+/IntegratedHub/ClientApp/src/app/**/*.js.map 
+/IntegratedHub/ClientApp/src/app/**/*.js

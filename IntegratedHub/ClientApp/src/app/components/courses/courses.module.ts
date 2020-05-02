@@ -9,6 +9,7 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
 import { FormsModule } from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
 import { HelperMethods } from "../../_helpers/helper.methods";
+import { CourseService } from '../../services/CourseService';
 
 @NgModule({
     declarations: [CoursesComponent,
@@ -22,6 +23,9 @@ import { HelperMethods } from "../../_helpers/helper.methods";
         CommonModule,
         MatSliderModule
     ],
-    providers: [HelperMethods]
+  providers: [
+    HelperMethods,
+    CourseService
+  ]
 })
 export class CoursesModule { }

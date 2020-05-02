@@ -3,6 +3,7 @@ import { Course } from "../../models/course";
 import { COURSES } from "../../Shared/courses";
 import { MatSliderModule } from '@angular/material/slider';
 import { HelperMethods } from '@app/_helpers/helper.methods';
+import { CourseService } from '../../services/CourseService';
 
 @Component({
   selector: 'app-courses',
@@ -26,13 +27,26 @@ export class CoursesComponent implements OnInit {
   public currentDurationSliderValue: number = 0;
 
 
-  constructor(public helperMethods: HelperMethods) { }
+  constructor(public helperMethods: HelperMethods, public courseService: CourseService) { }
 
   ngOnInit() {
-    this.filteredCoursesByDuration = this.filteredCoursesByTags = this.coursesAll = COURSES;
+    this.getFullCourseList();
+    this.filteredCoursesByDuration = this.filteredCoursesByTags = this.coursesAll;
     this.getCommonCoursesAfterFilter();
     this.collectAllTags();
-    this.currentDurationSliderValue = this.maxDuration = Math.max.apply(Math, COURSES.map(function (o) { return o.duration; }));
+    this.currentDurationSliderValue = this.maxDuration = Math.max.apply(Math, this.coursesAll.map(function (o) { return o.duration; }));
+  }
+
+  public getFullCourseList(): void {
+    this.courseService.getCourses().
+      subscribe(
+        data => {
+          this.filteredCoursesByDuration = this.filteredCoursesByTags = this.coursesAll = data;
+          this.getCommonCoursesAfterFilter();
+          this.collectAllTags();
+          this.currentDurationSliderValue = this.maxDuration = Math.max.apply(Math, this.coursesAll.map(function (o) { return o.duration; }));
+        }
+      );
   }
 
   public beginPagination(pagedItems: Array<any>) {
@@ -40,9 +54,9 @@ export class CoursesComponent implements OnInit {
   }
 
   public collectAllTags() {
-    for (var i = 0, j = 0; i < COURSES.length; i++) {
-      for (var k = 0; k < COURSES[i].tags.length; k++)
-        this.technologyTags[j++] = COURSES[i].tags[k];
+    for (var i = 0, j = 0; i < this.coursesAll.length; i++) {
+      for (var k = 0; k < this.coursesAll[i].tags.length; k++)
+        this.technologyTags[j++] = this.coursesAll[i].tags[k];
     }
     this.technologyTags = this.technologyTags.filter(function (item, pos, self) {
       return self.indexOf(item) == pos;
